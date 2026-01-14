@@ -1,0 +1,9 @@
+build:
+  dockerfile: |
+    FROM debian:bullseye-slim
+    RUN apt-get update && apt-get install -y wget gnupg ca-certificates
+    RUN wget -q -O - http://debian.erlyvideo.org/binary/gpg.key | apt-key add -
+    RUN echo "deb http://debian.erlyvideo.org binary/" >> /etc/apt/sources.list
+    RUN apt-get update && apt-get install -y flussonic
+    EXPOSE 80 443 1935 554
+    CMD ["/usr/bin/flussonic", "/etc/flussonic/flussonic.conf"]
